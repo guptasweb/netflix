@@ -1,0 +1,111 @@
+body {
+	color: white;
+	background-color: black;
+}
+.app {
+  display: flex;
+  flex-direction: column;
+ padding: 5px 30px 30px 30px;
+}
+
+header {
+	display: flex;
+	justify-content: space-between;
+}
+h1 {
+	color: red;
+	font-size: 60px;
+	margin: 0;
+}
+h1 img {
+	width: 100px;
+}
+
+.nav {
+	display: flex;
+	align-self: center;
+	
+}
+.navBar {
+	align-self: center;
+}
+.search {
+	padding-left: 50px;
+}
+.notification {
+	margin-left: auto;
+	min-width: 200px;
+}
+section {
+	display: flex;
+	flex-direction: column;
+	padding: 50px 70px 50px 90px;
+}
+.loader {
+	margin-top: 5%;
+	margin-left: 50%;
+	  display: inline-block;
+	  width: 64px;
+	  height: 64px;
+}
+.loader:after {
+  content: " ";
+  display: block;
+  width: 46px;
+  height: 46px;
+  margin: 1px;
+  border-radius: 50%;
+  border: 5px solid #fff;
+  border-color: #fff transparent #fff transparent;
+  animation: Loader 1.2s linear infinite;
+}
+@keyframes Loader {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.tile {
+	opacity: 0;
+	position: relative;
+	animation-duration: 10s;
+	animation-fill-mode: both;
+	animation-name: fadeIn;
+	cursor: pointer;
+	width: 200px;
+}
+ 
+@keyframes fadeIn {
+	from {opacity: 0;} to {opacity: 0.3;}
+}
+
+.grid {
+	display: flex;
+	flex-wrap: wrap;
+}
+h2 {
+	position: absolute;
+	top: 100px;
+}
+
+.hoveredImage {
+	position: relative;
+	opacity: 1;
+	width: 220px;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
