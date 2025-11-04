@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import axios from '../node_modules/axios';
-import InfiniteScroll from '../node_modules/react-infinite-scroll-component';
+import axios from 'axios';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { FaSearch, FaBell, FaQuestionCircle } from 'react-icons/fa';
 
 import netflix from './netflix_logo.png';
@@ -12,7 +12,9 @@ class App extends Component {
 		super(props);
 		this.state = {
 			movies: [],
-			loaded: false
+			loaded: false,
+			searchQuery: '',
+			showSearch: false
 		};
 	}
 	
@@ -52,6 +54,27 @@ class App extends Component {
 		}));
 	}
 	
+	toggleSearch() {
+		this.setState((state) => ({
+			showSearch: !state.showSearch
+		}));
+	}
+
+	handleSearchChange(event) {
+		this.setState({
+			searchQuery: event.target.value
+		});
+	}
+
+	getFilteredMovies() {
+		if (!this.state.searchQuery) {
+			return this.state.movies;
+		}
+		return this.state.movies.filter((movie) =>
+			movie.title.toLowerCase().includes(this.state.searchQuery.toLowerCase())
+		);
+	}
+
 	componentDidMount() {
 		this.fetchMovies();
 	}
@@ -62,7 +85,20 @@ class App extends Component {
 		<header>
 			<h1><img src={netflix} alt="Netflix" /></h1>
 			<div className="nav">
-				<FaSearch className="navBar search" />
+				<FaSearch 
+					className="navBar search search-icon" 
+					onClick={() => this.toggleSearch()}
+				/>
+				{this.state.showSearch && (
+					<input 
+						type="text"
+						className="search-input"
+						placeholder="Search movies..."
+						value={this.state.searchQuery}
+						onChange={(e) => this.handleSearchChange(e)}
+						autoFocus
+					/>
+				)}
 				<p className="search">BROWSE</p>
 				<p className="search">|</p>
 				<p className="search">KIDS</p>
@@ -84,13 +120,14 @@ class App extends Component {
 			>
 				<div className="grid">
 					{this.state.loaded
-					? this.state.movies.map((image, index) => (
+					? this.getFilteredMovies().map((image, index) => (
 							<div key={index} 
 								className={image.isHovered ? "hoveredImage" : "tile"}
 								onMouseEnter={this.onMouseEnter.bind(this, index)} 
 								onMouseLeave={this.onMouseLeave.bind(this, index)} >
 								<img
-									src={` http://image.tmdb.org/t/p/w200/${image.poster_path}`} 
+									src={` http://image.tmdb.org/t/p/w200/${image.poster_path}`}
+									alt={image.title} 
 								/>
 								<h2>{image.title}</h2>
 							</div>
